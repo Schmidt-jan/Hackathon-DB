@@ -1,0 +1,162 @@
+{
+    "info": {
+        "_postman_id": "f776cf64-007f-4b4f-8017-8ef230a17b16",
+        "name": "Warehouse API",
+        "description": "Collection of endpoints for managing items and transactions in a warehouse system.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get Item Location",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/items/{{item_id}}/location",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "items",
+                        "{{item_id}}",
+                        "location"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Items",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/items",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "items"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Search Items",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "description": ""
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"search_key\": \"search_value\"}"
+                },
+                "url": {
+                    "raw": "http://localhost:8000/items/search",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "items",
+                        "search"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Start Transaction",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "description": ""
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"transaction_id\": \"{{transaction_id}}\", \"item_id\": \"{{item_id}}\", \"status\": \"in_transit\"}"
+                },
+                "url": {
+                    "raw": "http://localhost:8000/transactions/start",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "transactions",
+                        "start"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Abort Transaction",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/transactions/{{transaction_id}}/abort",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "transactions",
+                        "{{transaction_id}}",
+                        "abort"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Complete Transaction",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "description": ""
+                    }
+                ],
+                "body": {},
+                "url": {
+                    "raw": "http://localhost:8000/transactions/{{transaction_id}}/complete",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "transactions",
+                        "{{transaction_id}}",
+                        "complete"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

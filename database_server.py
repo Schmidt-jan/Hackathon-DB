@@ -13,7 +13,7 @@ def load_json(filename):
     try:
         with open(filename, 'r') as file:
             data = json.load(file)
-        return data
+        return data["data"]
     except FileNotFoundError:
         print(f"Error: The file {filename} was not found.")
         return None

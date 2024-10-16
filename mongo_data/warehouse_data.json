@@ -1,3 +1,5 @@
+{
+    "data" :[
     {
         "_id": "item001",
         "name": "Safety Light Curtain",
@@ -128,3 +130,5 @@
         },
         "quantity": 18
     }
+]
+}

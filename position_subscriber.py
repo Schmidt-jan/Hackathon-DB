@@ -5,6 +5,12 @@ import threading
 import cairosvg  # Library to convert SVG to PNG
 import io
 
+SENSOR_OFFSET_X = 0.52 * 100
+SENSOR_OFFSET_Y = 0.59 * 100
+
+OFFSET_X = -2.0
+OFFSET_Y = -1
+
 # API endpoint
 API_URL = "http://127.0.0.1:5000/position"
 
@@ -19,6 +25,7 @@ BACKGROUND_IMAGE_PATH = "/home/jan/Desktop/SICK Hackathon/floorplan.svg"
 class MovingObjectApp:
     def __init__(self, root):
         self.root = root
+        self.state = 0
         self.root.title("Moving Object Visualization")
 
         # Load background SVG and convert it to PNG for Tkinter
@@ -52,11 +59,8 @@ class MovingObjectApp:
         try:
             with open(svg_path, "rb") as svg_file:
                 svg_data = svg_file.read()
-            
-            # Convert SVG to PNG using cairosvg
+        
             png_data = cairosvg.svg2png(bytestring=svg_data)
-
-            # Open the PNG data as a Pillow image
             png_image = Image.open(io.BytesIO(png_data))
 
             # Debug: Show image size and mode for verification
@@ -69,7 +73,6 @@ class MovingObjectApp:
             raise Exception(f"Failed to load SVG: {e}")
 
     def update_position(self):
-        # Fetch the current position from the API
         try:
             response = requests.get(API_URL)
             response.raise_for_status()
@@ -79,10 +82,7 @@ class MovingObjectApp:
             print(f"Error fetching position: {e}")
             position = [0, 0]
 
-        # Update the UI with the new position
         self.move_background(position)
-
-        # Schedule the next update after 1 second (1000 ms)
         self.root.after(10, self.update_position)
 
     def move_background(self, position):
@@ -92,8 +92,8 @@ class MovingObjectApp:
         bg_x, bg_y = bg_coords[0], bg_coords[1]
 
         # Calculate new position for the background based on the object position
-        new_x = CANVAS_WIDTH // 2 - position[0] * 100
-        new_y = CANVAS_HEIGHT // 2 - position[1] * 100
+        new_x = (OFFSET_X + position[1]) * 100 # + CANVAS_WIDTH // 2 
+        new_y = (OFFSET_Y + position[0]) * 100 # + CANVAS_HEIGHT // 2
 
         # Move the background image to new coordinates
         self.canvas.move(self.bg, new_x - bg_x, new_y - bg_y)
@@ -106,6 +106,8 @@ class MovingObjectApp:
             CANVAS_WIDTH // 2 + CIRCLE_RADIUS,
             CANVAS_HEIGHT // 2 + CIRCLE_RADIUS,
         )
+        
+            
 
 def start_app():
     root = tk.Tk()

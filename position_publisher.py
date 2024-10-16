@@ -1,71 +1,54 @@
 from flask import Flask, jsonify
-import time
-import math
+import paho.mqtt.client as mqtt
+import json
 
 app = Flask(__name__)
 
-# Define the waypoints for a 5x5 square
-waypoints = [[0, 0], [5, 0], [5, 5], [0, 5], [0, 0]]
+# Initialize variables to store position
+position_x = None
+position_y = None
 
-# Velocity to complete one loop in 10 seconds
-velocity = 2.0  # meters per second
+TAG_ID = '0004fc92-c020-45ab-a958-3f442a8a207c'
 
-# Calculate the cumulative distances between waypoints
-cumulative_distances = []
-total_distance = 0
+# MQTT settings
+MQTT_BROKER = "172.16.1.217"  # Replace with your MQTT broker address
+MQTT_PORT = 1883  # Default MQTT port
+MQTT_TOPIC = f'aa/assets/{TAG_ID}/data/position'    # Replace with your topic
 
-def calculate_distances(points):
-    """Calculate the cumulative distances between waypoints."""
-    distances = []
-    total = 0
-    for i in range(1, len(points)):
-        dist = math.dist(points[i-1], points[i])
-        total += dist
-        distances.append(total)
-    return distances
+# Define MQTT callback functions
+def on_connect(client, userdata, flags, rc):
+    print(f"Connected with result code {rc}")
+    client.subscribe(MQTT_TOPIC)
 
-# Precompute distances and total distance
-cumulative_distances = calculate_distances(waypoints)
-total_distance = cumulative_distances[-1]
+def on_message(client, userdata, msg):
+    global position_x, position_y
+    try:
+        payload = msg.payload.decode()
+        data = json.loads(payload)  # Assuming the payload is in JSON format
+        position_x = data.get('position', {}).get('x')
+        position_y = data.get('position', {}).get('y')
+        print(f"Position updated: {position_x}, {position_y}")
+    except Exception as e:
+        print(f"Error processing message: {e}")
 
-def get_position_at_time(t):
-    """Calculate the current position based on time and velocity."""
-    global waypoints, cumulative_distances
-    
-    # Normalize time for looping (modulo total time for a full loop)
-    loop_time = total_distance / velocity
-    t = t % loop_time
+# Initialize MQTT client
+mqtt_client = mqtt.Client()
+mqtt_client.on_connect = on_connect
+mqtt_client.on_message = on_message
 
-    # Total distance covered in time t
-    distance_covered = t * velocity
+# Start the MQTT client loop in a separate thread
+def start_mqtt():
+    mqtt_client.connect(MQTT_BROKER, MQTT_PORT, 60)
+    mqtt_client.loop_start()
 
-    # Find which segment the object is in based on distance
-    for i, cumulative_distance in enumerate(cumulative_distances):
-        if distance_covered <= cumulative_distance:
-            # Interpolate between waypoints[i] and waypoints[i + 1]
-            prev_distance = cumulative_distances[i - 1] if i > 0 else 0
-            ratio = (distance_covered - prev_distance) / (cumulative_distance - prev_distance)
-            start_point = waypoints[i]
-            end_point = waypoints[i + 1]
-            current_position = [
-                start_point[j] + ratio * (end_point[j] - start_point[j])
-                for j in range(len(start_point))
-            ]
-            return current_position
-    
-    # If the distance exceeds the last waypoint, return the last point
-    return waypoints[-1]
-
+# Flask route to return position
 @app.route('/position', methods=['GET'])
 def get_position():
-    """Get the current position of the object."""
-    # Calculate elapsed time
-    elapsed_time = time.time()  # No need for a start time since we continuously loop
-    
-    # Get the current position based on elapsed time
-    current_position = get_position_at_time(elapsed_time)
-    
-    return jsonify({"position": current_position})
+    if position_x is not None and position_y is not None:
+        return jsonify({"position": [position_x, position_y]})
+    else:
+        return jsonify({"error": "Position not available"}), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    start_mqtt()  # Start MQTT in the background
+    app.run(host='0.0.0.0', port=5000)  # Run Flask app

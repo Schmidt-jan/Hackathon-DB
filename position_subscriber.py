@@ -21,16 +21,24 @@ CIRCLE_RADIUS = 10
 
 # Background image file path (SVG file)
 BACKGROUND_IMAGE_PATH = "/home/jan/Desktop/SICK Hackathon/floorplan.svg"
+ARROW_LEFT_PATH = "/home/jan/Desktop/SICK Hackathon/images/icons8-left-arrow-50.png"
+ARROW_RIGHT_PATH = "/home/jan/Desktop/SICK Hackathon/images/icons8-right-arrow-50.png"
+ARROW_FORWARD_PATH = "/home/jan/Desktop/SICK Hackathon/images/icons8-arrow-up-50.png"
 
 class MovingObjectApp:
     def __init__(self, root):
         self.root = root
+        self.root.bind("<Key>", self.key_handler)
         self.state = 0
         self.root.title("Moving Object Visualization")
+        self.arrow_image_id = None
 
         # Load background SVG and convert it to PNG for Tkinter
         try:
             self.background_photo = self.load_svg_as_image(BACKGROUND_IMAGE_PATH)
+            # self.arrow_left = self.load_svg_as_image(ARROW_LEFT_PATH)
+            # self.arrow_right = self.load_svg_as_image(ARROW_RIGHT_PATH)
+            # self.arrow_forward = self.load_svg_as_image(ARROW_FORWARD_PATH)
         except Exception as e:
             print(f"Error loading SVG: {e}")
             return
@@ -53,6 +61,34 @@ class MovingObjectApp:
 
         # Start querying the API every second
         self.update_position()
+        
+    def key_handler(self, event):
+        if self.arrow_image_id is not None:
+            self.canvas.delete(self.arrow_image_id)
+        # use w, a, s, d to move the object
+        if event.char == 'w':
+            # load png image
+            arrow = tk.PhotoImage(file = ARROW_FORWARD_PATH)
+            
+            self.arrow_image_id = self.canvas.create_image(CANVAS_WIDTH // 2, 
+                                     CANVAS_HEIGHT // 2 - 60 , 
+                                     anchor=tk.NW, 
+                                     image=arrow)
+            
+            # set arrow to up
+        elif event.char == 'a':
+            arrow = tk.PhotoImage(file = ARROW_LEFT_PATH)
+            self.arrow_image_id = self.canvas.create_image(CANVAS_WIDTH // 2, 
+                                     CANVAS_HEIGHT // 2 - 60 , 
+                                        image=arrow)
+        elif event.char == 'd':
+            # delete arrow
+            arrow = tk.PhotoImage(file = ARROW_RIGHT_PATH)
+            self.arrow_image_id = self.canvas.create_image(CANVAS_WIDTH // 2 - 15, 
+                                     CANVAS_HEIGHT // 2 - 60 , 
+                                        anchor=tk.NW,
+                                        image=arrow)
+            
 
     def load_svg_as_image(self, svg_path):
         """Convert an SVG image to a PNG and load it for Tkinter."""
@@ -106,7 +142,9 @@ class MovingObjectApp:
             CANVAS_WIDTH // 2 + CIRCLE_RADIUS,
             CANVAS_HEIGHT // 2 + CIRCLE_RADIUS,
         )
+            
         
+
             
 
 def start_app():

@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "data" :[
     {
         "_id": "item001",
@@ -10,111 +11,127 @@
             "row": 1,
             "column": 5,
             "level": 2
+=======
+    "data": [
+        {
+            "_id": "item001",
+            "name": "Safety Light Curtain",
+            "description": "A safety light curtain is a type of safety device.",
+            "category": "Safety Systems",
+            "producer": "SICK",
+            "location": {
+                "row": 1,
+                "column": 5,
+                "level": 2
+            },
+            "quantity": 20
+>>>>>>> Stashed changes
         },
-        "quantity": 20
-    },
-    {
-        "_id": "item002",
-        "name": "Incremental Encoder",
-        "description": "An incremental encoder is a device that converts rotary motion.",
-        "category": "Sensors",
-        "producer": "SICK",
-        "location": {
-            "row": 2,
-            "column": 3,
-            "level": 1
+        {
+            "_id": "item002",
+            "name": "Incremental Encoder",
+            "description": "An incremental encoder is a device that converts rotary motion.",
+            "category": "Sensors",
+            "producer": "SICK",
+            "location": {
+                "row": 2,
+                "column": 3,
+                "level": 1
+            },
+            "quantity": 30
         },
-        "quantity": 30
-    },
-    {
-        "_id": "item003",
-        "name": "Proximity Sensor",
-        "description": "A proximity sensor detects the presence or absence of an object.",
-        "category": "Sensors",
-        "producer": "SICK",
-        "location": {
-            "row": 2,
-            "column": 7,
-            "level": 3
+        {
+            "_id": "item003",
+            "name": "Proximity Sensor",
+            "description": "A proximity sensor detects the presence or absence of an object.",
+            "category": "Sensors",
+            "producer": "SICK",
+            "location": {
+                "row": 2,
+                "column": 7,
+                "level": 3
+            },
+            "quantity": 50
         },
-        "quantity": 50
-    },
-    {
-        "_id": "item004",
-        "name": "Hydraulic Pump",
-        "description": "A hydraulic pump converts mechanical energy into hydraulic energy.",
-        "category": "Hydraulics",
-        "producer": "Rexroth",
-        "location": {
-            "row": 3,
-            "column": 1,
-            "level": 1
+        {
+            "_id": "item004",
+            "name": "Hydraulic Pump",
+            "description": "A hydraulic pump converts mechanical energy into hydraulic energy.",
+            "category": "Hydraulics",
+            "producer": "Rexroth",
+            "location": {
+                "row": 3,
+                "column": 1,
+                "level": 1
+            },
+            "quantity": 10
         },
-        "quantity": 10
-    },
-    {
-        "_id": "item005",
-        "name": "Servo Motor",
-        "description": "A servo motor is a rotary actuator that allows for precise control.",
-        "category": "Motors",
-        "producer": "Rexroth",
-        "location": {
-            "row": 4,
-            "column": 2,
-            "level": 2
+        {
+            "_id": "item005",
+            "name": "Servo Motor",
+            "description": "A servo motor is a rotary actuator that allows for precise control.",
+            "category": "Motors",
+            "producer": "Rexroth",
+            "location": {
+                "row": 4,
+                "column": 2,
+                "level": 2
+            },
+            "quantity": 15
         },
-        "quantity": 15
-    },
-    {
-        "_id": "item006",
-        "name": "Hydraulic Valve",
-        "description": "A hydraulic valve controls the flow of hydraulic fluid.",
-        "category": "Hydraulics",
-        "producer": "Rexroth",
-        "location": {
-            "row": 3,
-            "column": 4,
-            "level": 2
+        {
+            "_id": "item006",
+            "name": "Hydraulic Valve",
+            "description": "A hydraulic valve controls the flow of hydraulic fluid.",
+            "category": "Hydraulics",
+            "producer": "Rexroth",
+            "location": {
+                "row": 3,
+                "column": 4,
+                "level": 2
+            },
+            "quantity": 25
         },
-        "quantity": 25
-    },
-    {
-        "_id": "item007",
-        "name": "Industrial Robot Arm",
-        "description": "An industrial robot arm is used in manufacturing processes.",
-        "category": "Automation",
-        "producer": "ABB",
-        "location": {
-            "row": 5,
-            "column": 6,
-            "level": 1
+        {
+            "_id": "item007",
+            "name": "Industrial Robot Arm",
+            "description": "An industrial robot arm is used in manufacturing processes.",
+            "category": "Automation",
+            "producer": "ABB",
+            "location": {
+                "row": 5,
+                "column": 6,
+                "level": 1
+            },
+            "quantity": 8
         },
-        "quantity": 8
-    },
-    {
-        "_id": "item008",
-        "name": "Circuit Breaker",
-        "description": "A circuit breaker is an electrical switch designed to protect circuits.",
-        "category": "Electrical Components",
-        "producer": "ABB",
-        "location": {
-            "row": 5,
-            "column": 3,
-            "level": 2
+        {
+            "_id": "item008",
+            "name": "Circuit Breaker",
+            "description": "A circuit breaker is an electrical switch designed to protect circuits.",
+            "category": "Electrical Components",
+            "producer": "ABB",
+            "location": {
+                "row": 5,
+                "column": 3,
+                "level": 2
+            },
+            "quantity": 40
         },
-        "quantity": 40
-    },
-    {
-        "_id": "item009",
-        "name": "Programmable Logic Controller (PLC)",
-        "description": "A PLC is used in industrial automation to control machinery.",
-        "category": "Automation",
-        "producer": "ABB",
-        "location": {
-            "row": 6,
-            "column": 1,
-            "level": 3
+        {
+            "_id": "item009",
+            "name": "Programmable Logic Controller (PLC)",
+            "description": "A PLC is used in industrial automation to control machinery.",
+            "category": "Automation",
+            "producer": "ABB",
+            "location": {
+                "row": 6,
+                "column": 1,
+                "level": 3
+            },
+            "quantity": 12
         },
+<<<<<<< Updated upstream
         "quantity": 12
     },
     {
@@ -132,3 +149,20 @@
     }
 ]
 }
+=======
+        {
+            "_id": "item010",
+            "name": "Servo Drive",
+            "description": "A servo drive is a system used to control a servo motor.",
+            "category": "Motors",
+            "producer": "Rexroth",
+            "location": {
+                "row": 4,
+                "column": 6,
+                "level": 3
+            },
+            "quantity": 18
+        }
+    ]
+}
+>>>>>>> Stashed changes

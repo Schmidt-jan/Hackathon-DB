@@ -1,0 +1,7 @@
+tsp_solver
+numpy
+tcod
+scipy
+motor
+fastapi
+flask

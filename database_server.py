@@ -14,6 +14,7 @@ def load_json(filename):
         with open(filename, 'r') as file:
             data = json.load(file)
         return data["data"]
+        return data["data"]
     except FileNotFoundError:
         print(f"Error: The file {filename} was not found.")
         return None
@@ -29,14 +30,13 @@ app = FastAPI()
 async def get_db(request: Request):
     return request.app.state.db
 
-@app.post("/init_db")
 async def init_db(client: AsyncIOMotorClient = Depends(get_db)):
     # Clear collections
     await client.local.warehouse_db.drop()
     await client.local.transactions.drop()
 
     # Insert example data
-    await client.local.warehouse_db.insert_many(example_data)
+    await client.local.warehouse_db.insert_many(data)
 
     return {"message": "Database initialized with example data."}
 
@@ -138,3 +138,5 @@ if __name__ == "__main__":
 
     # Run the FastAPI application
     asyncio.run(uvicorn.run(app, host="0.0.0.0", port=8000))
+    
+    init_db()
